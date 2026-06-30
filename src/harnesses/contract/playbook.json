@@ -1,0 +1,28 @@
+{
+  "name": "contract-review",
+  "title": "Contract / document review harness",
+  "doc_types": {
+    "nda": ["non-disclosure", "confidentiality agreement", "nda"],
+    "msa": ["master services", "statement of work", "services agreement"],
+    "employment": ["employment agreement", "at-will", "employee"],
+    "lease": ["lease", "tenant", "landlord", "premises"]
+  },
+  "clause_categories": {
+    "confidentiality": ["confidential", "non-disclosure", "proprietary information"],
+    "liability": ["liability", "limitation of liability", "consequential damages"],
+    "indemnification": ["indemnif", "hold harmless"],
+    "termination": ["terminat", "term of this agreement", "expire", "renew"],
+    "payment": ["payment", "fees", "invoice", "compensation"],
+    "governing_law": ["governing law", "jurisdiction", "venue", "governed by"],
+    "ip": ["intellectual property", "work product", "ownership"],
+    "warranty": ["warrant", "as is", "fitness for a particular purpose"]
+  },
+  "required_categories": ["confidentiality", "termination", "governing_law"],
+  "rules": [
+    { "id": "liability_cap", "category": "liability", "check": "contains", "any": ["shall not exceed", "limitation of liability", "capped", "aggregate liability"], "severity": "high", "note": "Liability should be capped.", "remediation": "Add a liability cap (e.g., fees paid in the prior 12 months)." },
+    { "id": "governing_law_specified", "category": "governing_law", "check": "present", "severity": "high", "note": "Governing law / venue must be specified.", "remediation": "Specify the governing law and exclusive venue." },
+    { "id": "confidentiality_term", "category": "confidentiality", "check": "contains", "any": ["year", "month", "perpetual", "survive"], "severity": "medium", "note": "Confidentiality clause should state a duration.", "remediation": "State the confidentiality period or that it survives termination." },
+    { "id": "termination_notice", "category": "termination", "check": "contains", "any": ["days", "written notice", "prior notice"], "severity": "medium", "note": "Termination should require notice.", "remediation": "Add a written notice period (e.g., 30 days)." },
+    { "id": "auto_renew_flag", "category": "termination", "check": "contains", "any": ["automatically renew", "auto-renew", "evergreen"], "invert": true, "severity": "low", "note": "Auto-renewal present — confirm it is intended.", "remediation": "Confirm auto-renewal is intended; consider an opt-out notice window." }
+  ]
+}

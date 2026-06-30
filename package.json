@@ -1,0 +1,53 @@
+{
+  "name": "omni",
+  "version": "0.1.0",
+  "description": "A durable, observable, self-improving agentic operating system you talk to — zero dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Denis Craciun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deniscraciungabriel/omni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deniscraciungabriel/omni/issues"
+  },
+  "homepage": "https://github.com/deniscraciungabriel/omni#readme",
+  "keywords": [
+    "agent",
+    "agentic",
+    "ai",
+    "llm",
+    "automation",
+    "workflow",
+    "orchestration",
+    "self-improving",
+    "evals",
+    "zero-dependencies"
+  ],
+  "bin": {
+    "omni": "./bin/omni.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "files": [
+    "bin",
+    "src",
+    "evals",
+    "playbooks",
+    "profiles",
+    "docs",
+    "AGENTS.md",
+    "ROADMAP.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/omni.mjs chat",
+    "init": "node bin/omni.mjs init",
+    "serve": "node bin/omni.mjs serve",
+    "test": "node bin/omni.mjs eval",
+    "eval": "node bin/omni.mjs eval",
+    "status": "node bin/omni.mjs status"
+  }
+}

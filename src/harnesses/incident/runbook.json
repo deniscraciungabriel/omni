@@ -1,0 +1,15 @@
+{
+  "name": "incident-runbook",
+  "severity": [
+    { "when": { "errorRateGte": 15 }, "level": "sev1" },
+    { "when": { "affects": "payments" }, "level": "sev1" },
+    { "when": { "errorRateGte": 5 }, "level": "sev2" },
+    { "default": true, "level": "sev3" }
+  ],
+  "patterns": [
+    { "cause": "bad_deploy", "when": { "recentDeploy": true, "errorRateGte": 10 }, "confidence": 0.85, "mitigations": ["rollback_deploy"] },
+    { "cause": "database_outage", "when": { "symptom": "db" }, "confidence": 0.75, "mitigations": ["failover_db", "restart_service"] },
+    { "cause": "memory_leak", "when": { "symptom": "memory" }, "confidence": 0.7, "mitigations": ["restart_service", "scale_up"] },
+    { "cause": "resource_saturation", "when": { "symptom": "latency" }, "confidence": 0.5, "mitigations": ["scale_up"] }
+  ]
+}

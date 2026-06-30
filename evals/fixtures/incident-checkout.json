@@ -1,0 +1,7 @@
+{
+  "title": "Checkout API 5xx spike",
+  "symptoms": ["elevated 5xx error rate", "latency p99 elevated"],
+  "metrics": { "errorRatePct": 18, "latencyP99Ms": 4200 },
+  "recentDeploy": true,
+  "affectedSystems": ["checkout-api", "payments"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "coding-util",
+  "title": "Build & verify a coding utility (mined)",
+  "mode": "software",
+  "params": [
+    "spec"
+  ],
+  "description": "Mined from repeated successful util+tests trajectories. Param: spec (what to build).",
+  "tasks": [
+    {
+      "key": "implement",
+      "title": "Implement {{spec}}",
+      "kind": "llm",
+      "risk_level": "low",
+      "spec": {
+        "prompt": "{{spec}}. Create the module and node:test unit tests in the worktree root. Use only Node built-ins + ESM. Tests must pass with `node --test`.",
+        "worktree": true,
+        "executor": "claude"
+      },
+      "verify": {
+        "method": "node_test"
+      }
+    },
+    {
+      "key": "document",
+      "title": "Document {{spec}}",
+      "kind": "memory",
+      "depends_on": [
+        "implement"
+      ],
+      "spec": {
+        "knowledge": {
+          "key": "util:{{spec}}",
+          "kind": "semantic",
+          "value": "Implemented and verified: {{spec}}."
+        }
+      },
+      "verify": {
+        "method": "knowledge_present",
+        "key": "util:{{spec}}"
+      }
+    }
+  ]
+}

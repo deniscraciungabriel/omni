@@ -1,0 +1,6 @@
+{
+  "question": "What is the value of pi, estimated by Monte Carlo sampling?",
+  "hypothesis": "A seeded Monte Carlo estimator converges to pi within stated uncertainty.",
+  "method": "monte_carlo_pi",
+  "params": { "samples": 50000, "seeds": [1, 2, 3, 4, 5] }
+}

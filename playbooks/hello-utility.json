@@ -1,0 +1,75 @@
+{
+  "name": "hello-utility",
+  "title": "Build & verify a small utility module",
+  "mode": "software",
+  "description": "Deterministic end-to-end proof of the omni closed loop: scaffold a utility + tests, run the tests, verify independently, and record durable knowledge. No LLM required.",
+  "tasks": [
+    {
+      "key": "scaffold",
+      "title": "Scaffold slugify util + unit tests",
+      "kind": "command",
+      "risk_level": "low",
+      "spec": {
+        "writes": [
+          {
+            "path": "slugify.mjs",
+            "contentLines": [
+              "// slugify: turn arbitrary text into a url-safe slug.",
+              "export function slugify(input) {",
+              "  return String(input)",
+              "    .toLowerCase()",
+              "    .trim()",
+              "    .replace(/[^a-z0-9]+/g, '-')",
+              "    .replace(/^-+|-+$/g, '');",
+              "}"
+            ]
+          },
+          {
+            "path": "slugify.test.mjs",
+            "contentLines": [
+              "import { test } from 'node:test';",
+              "import assert from 'node:assert';",
+              "import { slugify } from './slugify.mjs';",
+              "",
+              "test('lowercases and hyphenates', () => {",
+              "  assert.equal(slugify('Hello World!'), 'hello-world');",
+              "});",
+              "test('collapses and trims', () => {",
+              "  assert.equal(slugify('  Foo   Bar  '), 'foo-bar');",
+              "});",
+              "test('strips edge punctuation', () => {",
+              "  assert.equal(slugify('--A_b--'), 'a-b');",
+              "});"
+            ]
+          }
+        ]
+      },
+      "verify": { "method": "file_exists", "paths": ["slugify.mjs", "slugify.test.mjs"] }
+    },
+    {
+      "key": "test",
+      "title": "Run unit tests for slugify",
+      "kind": "command",
+      "risk_level": "low",
+      "depends_on": ["scaffold"],
+      "spec": { "run": { "cmd": "node --test --no-warnings" } },
+      "verify": { "method": "command", "cmd": "node --test --no-warnings", "expectExit": 0 }
+    },
+    {
+      "key": "document",
+      "title": "Record durable knowledge about the slugify utility",
+      "kind": "memory",
+      "risk_level": "low",
+      "depends_on": ["test"],
+      "spec": {
+        "knowledge": {
+          "key": "slugify-utility",
+          "kind": "semantic",
+          "value": "slugify(input) lowercases, trims, replaces non-alphanumerics with '-', and strips edge hyphens. Verified by 3 unit tests via `node --test`.",
+          "confidence": 0.9
+        }
+      },
+      "verify": { "method": "knowledge_present", "key": "slugify-utility" }
+    }
+  ]
+}
